@@ -9,8 +9,7 @@ import './styles.css';
 
 type FormData = {
   username: string;
-  password: string;
-  
+  password: string;  
 };
 
 type LocationState = {

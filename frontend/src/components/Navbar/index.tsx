@@ -30,8 +30,7 @@ function Navbar() {
     });
     history.replace('/');
   };
-
-  console.log(authContextData?.tokenData?.exp);
+ 
   return (
     <nav className="bg-primary main-nav">
       <div className="container-fluid">

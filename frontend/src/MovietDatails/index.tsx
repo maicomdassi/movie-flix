@@ -1,10 +1,13 @@
-import axios from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import MoviesRating from 'components/MovieRating';
+//import MoviesRating from 'components/MovieRating';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Movie } from 'types/movie';
 import { Review } from 'types/review';
-import { BASE_URL } from 'util/requests';
+import { hashAnyRoles } from 'util/auth';
+//import { Review } from 'types/review';
+import { BASE_URL, requestBackend } from 'util/requests';
 import './styles.css';
 
 type UrlParms = {
@@ -12,64 +15,61 @@ type UrlParms = {
 };
 
 const MovieDatails = () => {
-
   const { movieId } = useParams<UrlParms>();
+
+  console.log(movieId);
   const [movie, setMovie] = useState<Movie>();
   const [reviews, setReviews] = useState<Review[]>();
   //const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-   // setLoading(true);
-    axios
-      .get(`${BASE_URL}/movies/${movieId}`)
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/movies/${movieId}/reviews`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
       .then((response) => {
-        setMovie(response.data);
-
-        axios
-        .get(`${BASE_URL}/movies/${movieId}/reviews`)
-        .then((response) => {
-          setReviews(response.data);
-        })
-
+        console.log('teste');
+        setReviews(response.data);
       })
       .finally(() => {
-        //setLoading(false);
+        console.log(requestBackend(params));
       });
   }, [movieId]);
 
   return (
     <div className="movie-container">
-         <h1>Tela detalhes do filme id: {movieId} </h1>
+      <h1>Tela detalhes do filme id: {movieId} </h1>
 
-        <div className='base-card movie-rate'>
-        <div className="mb-4">
-        <input
-            type="text"
-            className="form-control base-input"
-            placeholder="Deixe sua avaliação aqui"
-            name="movieRate"
-          />
+      {hashAnyRoles(['ROLE_MEMBER']) && (
+        <div className="base-card movie-rate">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4">
+              <input
+                type="text"
+                className="form-control base-input"
+                placeholder="Deixe sua avaliação aqui"
+                name="movieRate"
+              />
+            </div>
+            <div className="login-submit">
+              <button className="btn btn-primary btn-lg" type="submit">
+                SALVAR AVALIAÇÃO
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="login-submit">
-            <button className="btn btn-primary btn-lg" type="submit">SALVAR AVALIAÇÃO</button>
-        </div>
-        </div>
-             <div className='base-card movie-rating'>
-        
-        {reviews?.content.map((item) => (
-          <div className="movie-rate" key={item.id}>
-          <MoviesRating name={item.name} rate={item.rate}/>
-          </div>
-          
-       // <p key={item.id}>{item.email}</p>
-      ))}
-        
-        </div>
+      )}
 
-        <div>
+      <div className="base-card movie-rating">
+        {reviews?.map((item) => (
+          <MoviesRating key={item.id} name={item.user.name} rate={item.text} />
+        ))}
+      </div>
 
-    </div>
-    
+      <div></div>
     </div>
   );
 };

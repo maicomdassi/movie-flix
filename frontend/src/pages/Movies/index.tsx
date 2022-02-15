@@ -13,6 +13,7 @@ const Movies = () => {
 
         <Link to={`/movies/${movieid}`}>Acessar /movies/1</Link>
         <Link to="/movies/2">Acessar /movies/2</Link>
+        <Link to={`/movies`}>Acessar /movies</Link>
 
     </div>
   );
