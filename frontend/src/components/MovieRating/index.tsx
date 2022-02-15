@@ -6,15 +6,15 @@ type Props = {
   rate: string;
 }
 
-const MoviesRating = () => {
+const MoviesRating = ({name,rate} : Props) => {
   return (
     <div className="rating-container">
         <div className='rating-name'>
         <AuthImage />
-        <h2>Maria Silva</h2>
+        <h2>{name}</h2>
         </div>
 
-        <p>Gostei muito do filme. Foi muito bom mesmo. Pena que durou pouco.</p>
+        <p>{rate}</p>
 
     </div>
   );

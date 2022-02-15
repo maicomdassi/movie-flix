@@ -39,7 +39,7 @@ const MovieDatails = () => {
 
   return (
     <div className="movie-container">
-         <h1>Tela detalhes do filme id: 1 </h1>
+         <h1>Tela detalhes do filme id: {movieId} </h1>
 
         <div className='base-card movie-rate'>
         <div className="mb-4">
@@ -55,18 +55,19 @@ const MovieDatails = () => {
         </div>
         </div>
              <div className='base-card movie-rating'>
-            <MoviesRating/>
-            <MoviesRating/>
-            <MoviesRating/>
-            <MoviesRating/>
-            <MoviesRating/>
-            <MoviesRating/>
+        
+        {reviews?.content.map((item) => (
+          <div className="movie-rate" key={item.id}>
+          <MoviesRating name={item.name} rate={item.rate}/>
+          </div>
+          
+       // <p key={item.id}>{item.email}</p>
+      ))}
+        
         </div>
 
         <div>
-      {page?.content.map((item) => (
-        <p key={item.id}>{item.email}</p>
-      ))}
+
     </div>
     
     </div>
