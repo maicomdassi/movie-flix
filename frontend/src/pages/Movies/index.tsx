@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 
 let movieid = 1;
-let movieid2 = 1;
 
 const Movies = () => {
   return (
@@ -12,8 +11,7 @@ const Movies = () => {
         <h1>Tela listagem de filmes</h1>
 
         <Link to={`/movies/${movieid}`}>Acessar /movies/1</Link>
-        <Link to="/movies/2">Acessar /movies/2</Link>
-        <Link to={`/movies`}>Acessar /movies</Link>
+        <Link to="/movies/2">Acessar /movies/2</Link>      
 
     </div>
   );

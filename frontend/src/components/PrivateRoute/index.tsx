@@ -4,10 +4,11 @@ import { hashAnyRoles, isAuthenticated, Role } from 'util/auth';
 type Props = {
   children: React.ReactNode;
   path: string;
-  roles?: Role[]
+  roles?: Role[];
+  exact?: boolean;
 };
 
-const PrivateRoute = ({ children, path, roles = [] }: Props) => {
+const PrivateRoute = ({ children, path, roles = [], exact = false }: Props) => {
   return (
     <Route
       path={path}
@@ -25,6 +26,7 @@ const PrivateRoute = ({ children, path, roles = [] }: Props) => {
           children
         )
       }
+      exact={exact} 
     />
   );
 };

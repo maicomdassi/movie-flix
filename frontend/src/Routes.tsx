@@ -18,11 +18,9 @@ const Routes = () => (
       <Route path="/auth">
         <Auth />
       </Route>
-      <Route path="/movies" exact>
-      <PrivateRoute path="/movies">
-        <Movies />
-      </PrivateRoute>        
-      </Route>
+      <PrivateRoute path="/movies" exact>      
+        <Movies />             
+      </PrivateRoute>
       <PrivateRoute path="/movies/:movieId">     
         <MovieDatails />      
       </PrivateRoute>
