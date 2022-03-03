@@ -38,9 +38,7 @@
     display: flex;
     flex-direction: column;        
     margin-top: 40px;
-    width: 350px;
-    border: 1px solid red;
-    
+    width: 350px;    
   }
 
   .auth-banner-container h1 {
@@ -58,8 +56,7 @@
   }
 
   .auth-banner-container svg {
-    width: 100%;    
-    border: 1px solid red;
+    width: 100%;     
   }
 
   .auth-from-container {
@@ -83,7 +80,6 @@
 
   .auth-banner-container svg {
     width: 350px;    
-    border: 1px solid red;
   }
 
 }

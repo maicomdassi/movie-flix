@@ -1,8 +1,9 @@
 import { AxiosRequestConfig } from 'axios';
-import MoviesRating from 'components/MovieRating';
+import ReviewForm from 'components/ReviewForm';
+import ReviewListing from 'components/ReviewListing';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Movie } from 'types/movie';
 import { Review } from 'types/review';
 import { hashAnyRoles } from 'util/auth';
@@ -26,11 +27,11 @@ const MovieDatails = () => {
 /*   const location = useLocation<LocationState>();
   const { from } = location.state || { from: { pathname: `/movies/${movieId}` } }; */
   
-  const {
+/*   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Review>();
+  } = useForm<Review>(); */
 
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const MovieDatails = () => {
   }, [movieId]);
 
 
-  const onSubmit = (formData: Review) => {
+/*   const onSubmit = (formData: Review) => {
 
     const data = {
       ...formData,
@@ -75,7 +76,7 @@ const MovieDatails = () => {
         //setHasError(true);
         console.log('ERRO', error);
       });
-  };
+  }; */
 
 
   return (
@@ -83,7 +84,8 @@ const MovieDatails = () => {
       <h1>Tela detalhes do filme id: {movieId} </h1>
 
       {hashAnyRoles(['ROLE_MEMBER']) && (
-        <div className="base-card movie-rate">
+        <ReviewForm movieId={movieId}/>
+/*         <div className="base-card movie-rate">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
             <input
@@ -107,12 +109,12 @@ const MovieDatails = () => {
               </button>
             </div>
           </form>
-        </div>
+        </div> */
       )}
 
       <div className="base-card movie-rating">
         {reviews?.map((item) => (
-          <MoviesRating key={item.id} name={item.user.name} rate={item.text} />
+          <ReviewListing key={item.id} name={item.user.name} rate={item.text} />
         ))}
       </div>
 

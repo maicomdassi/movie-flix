@@ -1,14 +1,12 @@
 import { Redirect, Route } from 'react-router-dom';
-import { hashAnyRoles, isAuthenticated, Role } from 'util/auth';
+import { isAuthenticated } from 'util/auth';
 
 type Props = {
   children: React.ReactNode;
   path: string;
-  roles?: Role[];
-  exact?: boolean;
 };
 
-const PrivateRoute = ({ children, path, roles = [], exact = false }: Props) => {
+const PrivateRoute = ({ children, path }: Props) => {
   return (
     <Route
       path={path}
@@ -16,17 +14,15 @@ const PrivateRoute = ({ children, path, roles = [], exact = false }: Props) => {
         !isAuthenticated() ? (
           <Redirect
             to={{
-              pathname: '/auth/login',
+              pathname: '/',
               state: { from: location },
             }}
           />
-        ) : !hashAnyRoles(roles) ? (
-          <Redirect to="/movies" />
         ) : (
           children
         )
       }
-      exact={exact} 
+     
     />
   );
 };
