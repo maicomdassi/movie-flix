@@ -1,7 +1,9 @@
 import { AxiosRequestConfig } from 'axios';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { Review } from 'types/review';
 import { requestBackend } from 'util/requests';
+import './styles.css'
 
 type Props = {
   movieId: string;
@@ -33,12 +35,12 @@ const ReviewForm = ({ movieId, onInsertReview }: Props) => {
 
     requestBackend(config)
       .then((response) => {
-        setValue('text', '');
-        console.log('REVIEW SALVO COM SUCESSO', response);
+        setValue('text', '');        
+        toast.info('Review salvo com sucesso!');
         onInsertReview(response.data);
       })
       .catch((error) => {
-        console.log('ERRO AO SALVAR REVIEW', error);
+        toast.info('Erro ao tentar salvar o review!');        
       });
   };
 
@@ -61,8 +63,8 @@ const ReviewForm = ({ movieId, onInsertReview }: Props) => {
             {errors.text?.message}{' '}
           </div>
         </div>
-        <div className="login-submit">
-          <button className="btn btn-primary btn-lg" type="submit">
+        <div className="review-submit">
+          <button className="btn-review btn-primary btn-lg" type="submit">
             SALVAR AVALIAÇÃO
           </button>
         </div>

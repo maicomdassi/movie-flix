@@ -1,13 +1,14 @@
-import { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import MovieCard from 'components/MovieCard';
 import ReviewForm from 'components/ReviewForm';
 import ReviewListing from 'components/ReviewListing';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { Movie } from 'types/movie';
 import { Review } from 'types/review';
 import { hashAnyRoles } from 'util/auth';
-import { requestBackend } from 'util/requests';
+import { BASE_URL, requestBackend } from 'util/requests';
+import CardLoader from '../MoviesCatalog/CardLoader';
 
 import './styles.css';
 
@@ -18,6 +19,38 @@ type UrlParms = {
 const MovieDatails = () => {
   const { movieId } = useParams<UrlParms>();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [movie, setMovie] = useState<Movie>();
+  const [isLoading, setLoading] = useState(false);
+/* 
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${BASE_URL}/movies/${movieId}`)
+      .then((response) => {
+        setMovie(response.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [movieId]); */
+
+  useEffect(() => {
+    const params: AxiosRequestConfig = {
+      method: 'GET',
+      url: `/movies/${movieId}`,
+      withCredentials: true,
+    };
+
+    requestBackend(params)
+      .then((response) => {
+        setMovie(response.data);
+      })
+      .finally(() => {
+        setLoading(false);
+        console.log(requestBackend(params));
+      });
+  }, [movieId]);
+
 
   useEffect(() => {
     const params: AxiosRequestConfig = {
@@ -43,13 +76,14 @@ const MovieDatails = () => {
 
   return (
     <div className="movie-container">
-      <h1>Tela detalhes do filme id: {movieId} </h1>
+      {isLoading ? <CardLoader/> :
+      movie && <MovieCard movie={movie} synopsis={true} />}   
 
       {hashAnyRoles(['ROLE_MEMBER']) && (
         <ReviewForm movieId={movieId} onInsertReview={handleInsertReview} />
       )}
       <ReviewListing reviews={reviews} />
-      
+
     </div>
   );
 };

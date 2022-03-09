@@ -2,9 +2,9 @@ import Navbar from 'components/Navbar';
 import PrivateRoute from 'components/PrivateRoute';
 import MovieDatails from 'pages/Private/MovietDatails';
 import Home from 'pages/Home';
-import Movies from 'pages/Private/MoviesCatalog';
 import { Switch, Route, Router } from 'react-router-dom';
 import history from 'util/history';
+import MoviesCatalog from 'pages/Private/MoviesCatalog';
 
 const Routes = () => (
   <Router history={history}>
@@ -15,7 +15,7 @@ const Routes = () => (
       </Route>
       <PrivateRoute path="/movies">
         <Route path="/movies" exact>
-          <Movies />
+          <MoviesCatalog />
         </Route>
         <Route path="/movies/:movieId">
           <MovieDatails />

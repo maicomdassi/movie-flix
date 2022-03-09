@@ -34,7 +34,7 @@ function Navbar() {
   return (
     <nav className="bg-primary main-nav">
       <div className="container-fluid">
-        <Link to="/" className="nav-logo-text">
+        <Link to="/movies" className="nav-logo-text">
           <h4>MovieFlix</h4>
         </Link>
         <div className="nav-login">
